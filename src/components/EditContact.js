@@ -1,9 +1,15 @@
 import React, {useState} from "react";
-/*
-const AddContact = (props) => {
+import { useLocation } from "react-router-dom";
+
+const EditContact = (props) => {
+    
+    const location = useLocation()
+    console.log(location);
+    const {id, name, email} = location.state;
     const [data, SetData] = useState({
-        name:"",
-        email:""
+        id,
+        name,
+        email
     })
 
     const handleClick = (e) => {   
@@ -18,20 +24,21 @@ const AddContact = (props) => {
         
     }
 
-    const add = (e) => {
+    const update = (e) => {
         e.preventDefault();
         if(data.name === "" || data.email === "")
         {
             alert("All fileds are mandatory");
             return;
         }
-        props.addContactHandler(data);
+        props.updateContactHandler(data);
         SetData({name:"", email:""});
     }
     
     return (
-        <div className="ui main" method="post" onSubmit={add}>
-            <h2>Add Contact</h2>
+        <div className="ui main" method="post" onSubmit={update}>
+            <br /><br />
+            <h2>Update Contact</h2>
             <form className="ui form" >
                 <div className="field">
                     <label>Name</label>
@@ -41,20 +48,27 @@ const AddContact = (props) => {
                     <label>Email</label>
                     <input type="text" name="email" placeholder="Email" onChange={handleClick} value={data.email} />
                 </div>
-                <button className="ui button blue" type="submit">Add</button>
+                <button className="ui button blue" type="submit">Update</button>
             </form>
         </div>
     )
 }
-*/
 
-class AddContact extends React.Component {
-    state = {
-        name:"",
-        email:""
+/*
+class EditContact extends React.Component {
+    constructor(){
+        super();
+        //console.log(this.props);
+        const {name, email} = location.state;
+        
+        this.state = {
+            id,
+            name,
+            email
+        }
     }
 
-    add = (e) => {
+    update = (e) => {
         e.preventDefault();
         if(this.state.name === "" || this.state.email === "")
         {
@@ -69,9 +83,8 @@ class AddContact extends React.Component {
     render(){
         return (
             <div className="ui main">
-                <br /><br />
                 <h2>Add Contact</h2>
-                <form className="ui form" onSubmit={this.add}>
+                <form className="ui form" onSubmit={this.update}>
                     <div className="field">
                         <label>Name</label>
                         <input type="text" name="name" placeholder="Name" onChange={(e) => this.setState({name:e.target.value})} value={this.state.name} />
@@ -87,4 +100,19 @@ class AddContact extends React.Component {
     }
 }
 
-export default AddContact;
+/*const LocationComponent = props => {
+    const location = useLocation()
+    return <EditContact location={location} {...props} /> // your component
+}*/
+/*
+export function withRouter(Children){
+    return(props)=>{
+
+       const location  = {params: useLocation()};
+       return <Children {...props}  location = {location}/>
+   }
+ }
+
+export default withRouter(EditContact);*/
+
+export default EditContact;
